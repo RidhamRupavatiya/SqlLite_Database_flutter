@@ -40,7 +40,12 @@ class MyDataBase{
   }
   Future<int> UpdatetUser(map,id) async {
     Database db = await initDatabase();
-    int UserId = await db.update("Tbl_User", map,where: "UserId = ?",whereArgs: ["id"]);
+    int UserId = await db.update("Tbl_User", map,where: "UserId = ?",whereArgs: [id]);
+    return UserId;
+  }
+  Future<int> deleteUser(id) async{
+    Database db = await initDatabase();
+    int UserId = await db.delete("Tbl_User",where: "UserId = ?",whereArgs: [id]);
     return UserId;
   }
 }

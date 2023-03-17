@@ -24,45 +24,49 @@ class _AddEditDbState extends State<AddEditDb> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    namecontroller.text = widget.map==null?"":widget.map!["Name"].toString();
-    citycontroller.text = widget.map==null?"":widget.map!["CityName"].toString();
-    dobcontroller.text = widget.map==null?"":widget.map!["Dob"].toString();
+    namecontroller.text = widget.map==null?"":widget.map!["Name"];
+    citycontroller.text = widget.map==null?"":widget.map!["CityName"];
+    dobcontroller.text = widget.map==null?"":widget.map!["Dob"];
   }
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body:Padding(
-        padding: const EdgeInsets.only(top: 38.0,),
+        padding: const EdgeInsets.only(top: 8.0,),
         child: Form(
           key: formKey,
           child: Card(
-            child: Column(
-              children: [
-                TextFormField(decoration: InputDecoration(hintText: "Enter Name"),controller: namecontroller,validator: (value) {
-                  if(value==null && value!.isEmpty){
-                    return "Enter Valid Name";
-                  }
-                },),
-                TextFormField(decoration: InputDecoration(hintText: "Enter City"),controller: citycontroller,validator: (value) {
-                  if(value==null && value!.isEmpty){
-                    return "Enter Valid City";
-                  }
-                },),
-                TextFormField(decoration: InputDecoration(hintText: "Enter Dob"),controller: dobcontroller,validator: (value) {
-                  if(value==null && value!.isEmpty){
-                    return "Enter Valid Dob";
-                  }
-                },),
-                TextButton(onPressed: () {
-                  if(formKey.currentState!.validate()){
-                    if(widget.map==null){
-                      insertUser().then((value) => Navigator.of(context).pop(true));
+            child: Container(
+              height: 250,
+              child: Column(
+                children: [
+                  TextFormField(decoration: InputDecoration(hintText: "Enter Name"),controller: namecontroller,validator: (value) {
+                    if(value==null && value!.isEmpty){
+                      return "Enter Valid Name";
                     }
-                    else{
-                      upadteUser(widget.map!["UserId"]).then((value) => Navigator.of(context).pop(true));
+                  },),
+                  TextFormField(decoration: InputDecoration(hintText: "Enter City"),controller: citycontroller,validator: (value) {
+                    if(value==null && value!.isEmpty){
+                      return "Enter Valid City";
                     }
-                  }
-                }, child: Text("Submit")),
-              ],
+                  },),
+                  TextFormField(decoration: InputDecoration(hintText: "Enter Dob"),controller: dobcontroller,validator: (value) {
+                    if(value==null && value!.isEmpty){
+                      return "Enter Valid Dob";
+                    }
+                  },),
+                  TextButton(onPressed: () {
+                    if(formKey.currentState!.validate()){
+                      if(widget.map==null){
+                        insertUser().then((value) => Navigator.of(context).pop(true));
+                      }
+                      else{
+                        upadteUser(widget.map!["UserId"]).then((value) => Navigator.of(context).pop(true));
+                      }
+                    }
+                  }, child: Text("Submit")),
+                ],
+              ),
             ),
           ),
         ),

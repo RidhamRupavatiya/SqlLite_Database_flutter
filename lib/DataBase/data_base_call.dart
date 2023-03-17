@@ -1,6 +1,7 @@
 import 'package:crud_operation/DataBase/add_edit_db.dart';
 import 'package:crud_operation/DataBase/my_database.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class DataBaseCall extends StatefulWidget {
   const DataBaseCall({Key? key}) : super(key: key);
@@ -56,13 +57,17 @@ class _DataBaseCallState extends State<DataBaseCall> {
                           Expanded(child: Container()),
                           Column(children: [
                             TextButton(onPressed: () {
-
+                              deleteUser((snapshot.data![index]["UserId"]).toString()).then((value) {
+                                setState(() {
+                                });
+                              },);
                             }, child: Icon(Icons.delete,color: Colors.red,)),
                             TextButton(onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                                 return AddEditDb(map: snapshot.data![index],);
                               },)).then((value) {
-                                initState();
+                                setState(() {
+                                });
                               },);
                             }, child: Icon(Icons.edit)),
                           ],),
@@ -72,7 +77,7 @@ class _DataBaseCallState extends State<DataBaseCall> {
                   },itemCount: snapshot.data!.length,);
                 }
                 else{
-                  return Container(child: CircularProgressIndicator(),);
+                  return Center(child: CircularProgressIndicator(),);
                 }
               },
               future: MyDataBase().getUserListFromTable());
@@ -82,5 +87,9 @@ class _DataBaseCallState extends State<DataBaseCall> {
         }
       },future: MyDataBase().copyPasteAssetFileToRoot(),),
     );
+  }
+  Future<int> deleteUser(id) async {
+    int UserId = await MyDataBase().deleteUser(id);
+    return UserId;
   }
 }
